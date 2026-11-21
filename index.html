@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>রংধনু ফ্যাশন — আসল AI সহায়িকা ডেমো</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans Bengali','Hind Siliguri',system-ui,sans-serif;background:#fff8f6;color:#333;line-height:1.6}
+  .demo-badge{position:fixed;top:10px;right:10px;background:#6c3483;color:#fff;font-size:12px;padding:4px 10px;border-radius:20px;z-index:99}
+  header{background:linear-gradient(135deg,#8e1e4a,#c0392b);color:#fff;text-align:center;padding:42px 16px 34px}
+  header h1{font-size:32px;letter-spacing:.5px}
+  header p{opacity:.95;margin-top:6px}
+  .cta{display:inline-block;margin-top:18px;background:#fff;color:#8e1e4a;font-weight:700;padding:11px 26px;border-radius:30px;text-decoration:none}
+  .bar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:14px;background:#fff;border-bottom:1px solid #f0d9d4}
+  .bar span{background:#fdeceb;color:#8e1e4a;border:1px solid #f5c6c0;padding:6px 14px;border-radius:20px;font-size:14px}
+  section{max-width:960px;margin:0 auto;padding:28px 16px}
+  h2{text-align:center;color:#8e1e4a;margin-bottom:6px;font-size:24px}
+  .sub{text-align:center;color:#777;margin-bottom:22px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+  .card{background:#fff;border:1px solid #f0d9d4;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+  .thumb{height:150px;display:flex;align-items:center;justify-content:center;font-size:64px}
+  .t1{background:linear-gradient(135deg,#f9d976,#f39c12)}
+  .t2{background:linear-gradient(135deg,#fbc2eb,#a6c1ee)}
+  .t3{background:linear-gradient(135deg,#a1c4fd,#c2e9fb)}
+  .t4{background:linear-gradient(135deg,#ff9a9e,#fecfef)}
+  .t5{background:linear-gradient(135deg,#84fab0,#8fd3f4)}
+  .t6{background:linear-gradient(135deg,#fccb90,#d57eeb)}
+  .info{padding:14px}
+  .info h3{font-size:18px}
+  .price{color:#c0392b;font-weight:700;font-size:18px;margin:4px 0}
+  .price s{color:#999;font-weight:400;font-size:14px;margin-left:6px}
+  .meta{font-size:13px;color:#777}
+  .order-btn{display:block;text-align:center;background:#8e1e4a;color:#fff;text-decoration:none;padding:10px;border-radius:8px;margin-top:10px;font-weight:700}
+  .why{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:10px}
+  .why div{background:#fff;border:1px solid #f0d9d4;border-radius:12px;padding:16px;text-align:center}
+  .why b{color:#8e1e4a}
+  form{background:#fff;border:1px solid #f0d9d4;border-radius:14px;padding:22px;max-width:520px;margin:0 auto}
+  label{display:block;font-weight:700;margin:12px 0 4px}
+  input,select,textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:8px;font-size:16px;font-family:inherit}
+  button{width:100%;background:#27ae60;color:#fff;border:0;padding:13px;border-radius:8px;font-size:18px;font-weight:700;margin-top:16px;cursor:pointer}
+  .note{text-align:center;color:#777;font-size:14px;margin-top:10px}
+  #done{display:none;background:#eafaf1;border:1px solid #27ae60;color:#1e8449;border-radius:10px;padding:14px;text-align:center;margin-top:14px;font-weight:700}
+  /* Lead-gen support chat */
+  #chatBtn{position:fixed;bottom:18px;right:18px;background:#25D366;color:#fff;border:0;border-radius:30px;padding:13px 20px;font-size:16px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer;z-index:100;font-family:inherit;width:auto;margin:0}
+  #chatBox{position:fixed;bottom:78px;right:18px;width:330px;max-width:calc(100vw - 24px);height:460px;max-height:70vh;background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.28);display:none;flex-direction:column;overflow:hidden;z-index:100;border:1px solid #eee}
+  #chatHead{background:linear-gradient(135deg,#8e1e4a,#c0392b);color:#fff;padding:12px 14px;font-weight:700}
+  #chatHead small{display:block;font-weight:400;font-size:12px;opacity:.9}
+  #chatMsgs{flex:1;overflow-y:auto;padding:12px;background:#fdf3f0}
+  .msg{max-width:85%;padding:9px 12px;border-radius:14px;margin:6px 0;font-size:15px;white-space:pre-wrap;width:fit-content}
+  .bot{background:#fff;border:1px solid #f0d9d4;border-bottom-left-radius:4px}
+  .me{background:#8e1e4a;color:#fff;margin-left:auto;border-bottom-right-radius:4px}
+  #chatQuick{padding:8px;background:#fff;display:flex;flex-wrap:wrap;gap:6px;border-top:1px solid #f3e2de}
+  #chatQuick button{width:auto;margin:0;background:#fdeceb;color:#8e1e4a;border:1px solid #f5c6c0;padding:7px 12px;border-radius:20px;font-size:14px;font-weight:600}
+  #chatRow{display:flex;border-top:1px solid #eee;background:#fff}
+  #chatIn{flex:1;border:0;padding:12px;font-size:15px;font-family:inherit;outline:none}
+  #chatSend{width:auto;margin:0;background:#25D366;border-radius:0;padding:0 18px;font-size:16px}
+  .waSend{display:block;text-align:center;background:#25D366;color:#fff;text-decoration:none;padding:11px;border-radius:10px;font-weight:700;margin:8px 0}
+  footer{background:#2c1a22;color:#f5d5e0;text-align:center;padding:22px 16px;font-size:14px}
+</style>
+</head>
+<body>
+<div class="demo-badge">AI ডেমো</div>
+
+<header>
+  <h1>🌸 রংধনু ফ্যাশন 🌸</h1>
+  <p>শাড়ি • হিজাব • চুড়ি কম্বো • থ্রি-পিস — ঘরে বসে অর্ডার করুন</p>
+  <a class="cta" href="#order">এখনই অর্ডার করুন</a>
+</header>
+
+<div class="bar">
+  <span>🚚 সারা দেশে হোম ডেলিভারি</span>
+  <span>💵 ক্যাশ অন ডেলিভারি</span>
+  <span>🔄 সহজ রিটার্ন</span>
+</div>
+
+<section>
+  <h2>আমাদের কালেকশন</h2>
+  <p class="sub">সাইজ ও কালার দেখে পছন্দ করুন — দামসহ সব দেওয়া আছে</p>
+  <div class="grid">
+    <div class="card"><div class="thumb t1">🥻</div><div class="info">
+      <h3>জামদানি শাড়ি</h3><div class="price">৳১,৪৫০ <s>৳১,৮০০</s></div>
+      <div class="meta">কালার: লাল, নীল, সবুজ • ফ্রি সাইজ</div>
+      <a class="order-btn" href="#order" onclick="pick('জামদানি শাড়ি')">অর্ডার করুন</a></div></div>
+    <div class="card"><div class="thumb t2">🧕</div><div class="info">
+      <h3>প্রিমিয়াম হিজাব</h3><div class="price">৳৩৫০ <s>৳৪৫০</s></div>
+      <div class="meta">কালার: ১২টি • নরম জর্জেট</div>
+      <a class="order-btn" href="#order" onclick="pick('প্রিমিয়াম হিজাব')">অর্ডার করুন</a></div></div>
+    <div class="card"><div class="thumb t3">📿</div><div class="info">
+      <h3>কাঁচের চুড়ি কম্বো প্যাক</h3><div class="price">৳৫৯৯ <s>৳৭৫০</s></div>
+      <div class="meta">সাইজ: ২.৪ / ২.৬ / ২.৮ • ১২ পিস</div>
+      <a class="order-btn" href="#order" onclick="pick('কাঁচের চুড়ি কম্বো প্যাক')">অর্ডার করুন</a></div></div>
+    <div class="card"><div class="thumb t4">👗</div><div class="info">
+      <h3>বুটিকস থ্রি-পিস</h3><div class="price">৳১,২৫০ <s>৳১,৫০০</s></div>
+      <div class="meta">সাইজ: M / L / XL • কটন</div>
+      <a class="order-btn" href="#order" onclick="pick('বুটিকস থ্রি-পিস')">অর্ডার করুন</a></div></div>
+    <div class="card"><div class="thumb t5">🧥</div><div class="info">
+      <h3>কুর্তি — ডেইলি ওয়্যার</h3><div class="price">৳৮৯০ <s>৳১,১০০</s></div>
+      <div class="meta">সাইজ: M / L / XL • আরামদায়ক</div>
+      <a class="order-btn" href="#order" onclick="pick('কুর্তি — ডেইলি ওয়্যার')">অর্ডার করুন</a></div></div>
+    <div class="card"><div class="thumb t6">🎀</div><div class="info">
+      <h3>শাড়ি + চুড়ি গিফট সেট</h3><div class="price">৳১,৯৯৯ <s>৳২,৪০০</s></div>
+      <div class="meta">উপহারের জন্য সেরা • বক্সসহ</div>
+      <a class="order-btn" href="#order" onclick="pick('শাড়ি + চুড়ি গিফট সেট')">অর্ডার করুন</a></div></div>
+  </div>
+</section>
+
+<section>
+  <h2>কেন আমাদের থেকে কিনবেন?</h2>
+  <div class="why">
+    <div><b>💵 ক্যাশ অন ডেলিভারি</b><br>পণ্য হাতে পেয়ে টাকা দিন</div>
+    <div><b>🚚 দ্রুত ডেলিভারি</b><br>ঢাকায় ২৪ ঘণ্টা, ঢাকার বাইরে ২–৩ দিন</div>
+    <div><b>🔄 সহজ রিটার্ন</b><br>পছন্দ না হলে ৭ দিনে বদলে নিন</div>
+  </div>
+</section>
+
+<section id="order">
+  <h2>অর্ডার ফর্ম</h2>
+  <p class="sub">ফর্মটি পূরণ করুন — আমরা কল করে কনফার্ম করব</p>
+  <form onsubmit="return submitOrder(event)">
+    <label>আপনার নাম</label>
+    <input type="text" required placeholder="যেমন: ফাতেমা আক্তার">
+    <label>মোবাইল নম্বর</label>
+    <input type="tel" required placeholder="01XXXXXXXXX">
+    <label>পণ্য বেছে নিন</label>
+    <select id="product">
+      <option>জামদানি শাড়ি — ৳১,৪৫০</option>
+      <option>প্রিমিয়াম হিজাব — ৳৩৫০</option>
+      <option>কাঁচের চুড়ি কম্বো প্যাক — ৳৫৯৯</option>
+      <option>বুটিকস থ্রি-পিস — ৳১,২৫০</option>
+      <option>কুর্তি — ডেইলি ওয়্যার — ৳৮৯০</option>
+      <option>শাড়ি + চুড়ি গিফট সেট — ৳১,৯৯৯</option>
+    </select>
+    <label>সাইজ / কালার (যদি থাকে)</label>
+    <input type="text" placeholder="যেমন: লাল, সাইজ ২.৬">
+    <label>সম্পূর্ণ ঠিকানা</label>
+    <textarea rows="2" required placeholder="বাসা/হোল্ডিং, রোড, এলাকা, জেলা"></textarea>
+    <button type="submit">✅ অর্ডার কনফার্ম করুন</button>
+    <div id="done">ধন্যবাদ! 🎉 আপনার অর্ডারটি পেয়েছি — শীঘ্রই কল করে কনফার্ম করব।</div>
+  </form>
+  <p class="note">ডেলিভারি চার্জ: ঢাকায় ৳৬০, ঢাকার বাইরে ৳১২০ • পেমেন্ট: ক্যাশ অন ডেলিভারি</p>
+</section>
+
+<footer>
+  রংধনু ফ্যাশন — আপনার স্টাইল, আপনার পছন্দ 🌸<br>
+  মেসেঞ্জারে মেসেজ দিয়ে অর্ডার করতে পারেন
+</footer>
+
+<script>
+function pick(name){
+  var s=document.getElementById('product');
+  for(var i=0;i<s.options.length;i++){ if(s.options[i].text.indexOf(name)===0){ s.selectedIndex=i; break; } }
+}
+function submitOrder(e){
+  e.preventDefault();
+  document.getElementById('done').style.display='block';
+  window.scrollTo({top:document.getElementById('done').offsetTop-80,behavior:'smooth'});
+  return false;
+}
+</script>
+
+<button id="chatBtn" onclick="toggleChat()">🤖 AI সহায়িকা — অর্ডার/প্রশ্ন</button>
+<div id="chatBox">
+  <div id="chatHead">🌸 রংধনু ফ্যাশন AI সহায়িকা<small>আসল AI — যেকোনো প্রশ্ন করুন • 24/7 অনলাইন</small></div>
+  <div id="chatMsgs"></div>
+  <div id="chatQuick"></div>
+  <div id="chatRow"><input id="chatIn" placeholder="এখানে লিখুন..." onkeydown="if(event.key==='Enter')sendChat()"><button id="chatSend" onclick="sendChat()">➤</button></div>
+</div>
+
+<script>
+// ===== Real-AI support agent (Gemini via Netlify Function) =====
+var SHOP_WHATSAPP = '8801XXXXXXXXX'; // demo placeholder — a real client build uses the shop's own number
+var historyAI = [];
+var chatOpened = false;
+
+function toggleChat(){
+  var b=document.getElementById('chatBox');
+  var open=b.style.display==='flex';
+  b.style.display=open?'none':'flex';
+  if(!open && !chatOpened){
+    chatOpened=true;
+    botSay('আসসালামু আলাইকুম! 🌸 আমি রংধনু ফ্যাশনের AI সহায়িকা। দাম, ডেলিভারি, অর্ডার — যেকোনো প্রশ্ন লিখুন, আমি উত্তর দিচ্ছি।');
+    quick(['💰 দাম জানতে চাই','🛍️ অর্ডার করতে চাই','🚚 ডেলিভারি কতদিনে পাবো?']);
+  }
+}
+function addMsg(t,who){
+  var d=document.createElement('div'); d.className='msg '+who; d.textContent=t;
+  var box=document.getElementById('chatMsgs'); box.appendChild(d); box.scrollTop=box.scrollHeight;
+  return d;
+}
+function botSay(t){ addMsg(t,'bot'); }
+function quick(items){
+  var q=document.getElementById('chatQuick'); q.innerHTML='';
+  items.forEach(function(it){
+    var btn=document.createElement('button'); btn.textContent=it;
+    btn.onclick=function(){ handleUser(it); };
+    q.appendChild(btn);
+  });
+}
+function sendChat(){
+  var inp=document.getElementById('chatIn'); var t=inp.value.trim(); if(!t) return;
+  inp.value=''; handleUser(t);
+}
+async function handleUser(t){
+  addMsg(t,'me');
+  historyAI.push({role:'user', text:t});
+  var typing=addMsg('লিখছি…','bot');
+  try{
+    var res=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:historyAI})});
+    var data=await res.json();
+    var reply=(data && data.reply) ? data.reply : 'দুঃখিত, এখন উত্তর দিতে পারছি না। একটু পরে আবার চেষ্টা করুন।';
+    var lead=null;
+    var m=reply.match(/LEAD_JSON:(\{[\s\S]*?\})/);
+    if(m){ try{ lead=JSON.parse(m[1]); }catch(e){} reply=reply.replace(/LEAD_JSON:\{[\s\S]*?\}/,'').trim(); }
+    typing.textContent=reply;
+    historyAI.push({role:'model', text:reply});
+    if(lead && lead.name && lead.phone && lead.product){ showLeadButton(lead); }
+  }catch(e){
+    typing.textContent='দুঃখিত, সংযোগে সমস্যা হচ্ছে। একটু পরে আবার চেষ্টা করুন।';
+  }
+  var box=document.getElementById('chatMsgs'); box.scrollTop=box.scrollHeight;
+}
+function showLeadButton(lead){
+  var text='নতুন অর্ডার (AI সহায়িকা থেকে)\nনাম: '+lead.name+'\nমোবাইল: '+lead.phone+'\nপণ্য: '+lead.product;
+  var a=document.createElement('a'); a.className='waSend'; a.target='_blank';
+  a.href='https://wa.me/'+SHOP_WHATSAPP+'?text='+encodeURIComponent(text);
+  a.textContent='📲 WhatsApp-এ অর্ডার পাঠান';
+  var box=document.getElementById('chatMsgs'); box.appendChild(a); box.scrollTop=box.scrollHeight;
+}
+</script>
+</body>
+</html>
