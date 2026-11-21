@@ -1,6 +1,6 @@
 // Real-AI shop assistant — Gemini (free tier) via a Netlify Function.
 // The API key lives ONLY in the Netlify environment variable GEMINI_API_KEY — never in code.
-const MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-flash-latest'];
+const MODELS = ['gemini-3.8-flash', 'gemini-3.5-flash-lite', 'gemini-4-hydrogen'];
 
 const SYSTEM = [
   'তুমি "রংধনু ফ্যাশন" নামের একটি অনলাইন পোশাকের দোকানের AI সহায়িকা। তুমি কাস্টমারের সাথে বন্ধুসুলভভাবে কথা বলো, প্রশ্নের উত্তর দাও এবং অর্ডার নিতে সাহায্য করো।',
@@ -46,18 +46,22 @@ exports.handler = async function (event) {
   };
 
   for (let i = 0; i < MODELS.length; i++) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(function () { ctrl.abort(); }, 9000);
     try {
       const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + MODELS[i] + ':generateContent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        signal: ctrl.signal
       });
       const j = await r.json();
-      if (!r.ok) continue;
+      if (!r.ok) { clearTimeout(timer); continue; }
       const parts = ((((j.candidates || [])[0] || {}).content || {}).parts) || [];
       const text = parts.map(function (p) { return p.text || ''; }).join('').trim();
-      if (text) return { statusCode: 200, headers, body: JSON.stringify({ reply: text }) };
-    } catch (e) { /* try next model */ }
+      if (text) { clearTimeout(timer); return { statusCode: 200, headers, body: JSON.stringify({ reply: text }) }; }
+      clearTimeout(timer);
+    } catch (e) { clearTimeout(timer); /* try next model */ }
   }
   return { statusCode: 200, headers, body: JSON.stringify({ reply: 'দুঃখিত, AI এখন একটু ব্যস্ত আছে। একটু পরে আবার চেষ্টা করুন।' }) };
 };
